@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="bg-dark-subtle">
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container-fluid">
+            <a class="navbar-brand">Student Grading System</a>
+            <div th:if="${user != null}">
+                <div class="d-flex">
+                    <div class="nav-link disabled" aria-disabled="true">Logged in as: <span th:text="${user.getId()} + ' - ' + ${user.getName()} + ' (' + ${user.getUserType() + ')'}"></span></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <h2>Student details:</h2>
+    <p>ID: <span th:text="${student.getId()}"></span></p>
+    <p>Name: <span th:text="${student.getName()}"></span></p>
+    <h2>Courses List</h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Course ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Instructor ID</th>
+            <th scope="col">Instructor name</th>
+            <th scope="col">Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${courses}">
+            <td th:text="${course.getId()}"></td>
+            <td th:text="${course.getTitle()}"></td>
+            <td th:text="${course.getInstructorId()}"></td>
+            <td th:text="${instructors.get(course.getInstructorId()).getName()}"></td>
+            <td th:text="${grades.get(course.getId()).getGrade()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h2>Grades statistics</h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Average</th>
+            <th scope="col">Median</th>
+            <th scope="col">Highest</th>
+            <th scope="col">Lowest</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${#numbers.formatDecimal(statistics.getAverage(), 0, 'COMMA', 2, 'POINT')}"></td>
+            <td th:text="${#numbers.formatDecimal(statistics.getMedian(), 0, 'COMMA', 2, 'POINT')}"></td>
+            <td th:text="${#numbers.formatDecimal(statistics.getHighest(), 0, 'COMMA', 2, 'POINT')}"></td>
+            <td th:text="${#numbers.formatDecimal(statistics.getLowest(), 0, 'COMMA', 2, 'POINT')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${user.getUserType().toString().equalsIgnoreCase('admin')}">
+    <div class="container">
+        <form action="#" th:action="@{/student/update}" method="GET">
+            <input type="hidden" th:value="${student.getId()}" name="studentId">
+            <button class="btn btn-warning">Update student</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <form action="#" th:action="@{/student/delete}" method="POST">
+            <input type="hidden" th:value="${student.getId()}" name="studentId">
+            <button class="btn btn-danger">Delete student</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <a class="btn btn-secondary" href="/admin">Back</a>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

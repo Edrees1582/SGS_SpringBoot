@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit student</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="bg-dark-subtle">
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container-fluid">
+            <a class="navbar-brand">Student Grading System</a>
+            <div th:if="${user != null}">
+                <div class="d-flex">
+                    <div class="nav-link disabled" aria-disabled="true">Logged in as: <span th:text="${user.getId()} + ' - ' + ${user.getName()} + ' (' + ${user.getUserType() + ')'}"></span></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <form action="#" th:action="@{/student/update}" method="POST">
+    <label for="studentId">Student id:</label>
+    <input type="text" name="studentId" id="studentId" th:value="${student.getId()}" disabled>
+    <input type="hidden" name="studentId" th:value="${student.getId()}">
+
+    <label for="password">Password:</label>
+    <input type="text" name="password" id="password" value="">
+
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" th:value="${student.getName()}">
+    <button class="btn btn-success">Save</button>
+    </form>
+    <a class="btn btn-secondary" href="/admin">Cancel</a>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:security="http://www.springframework.org/security/tags">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="bg-dark-subtle">
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container-fluid">
+            <a class="navbar-brand">Student Grading System</a>
+            <div th:if="${user != null}">
+                <div class="d-flex">
+                    <div class="nav-link disabled" aria-disabled="true">Logged in as: <span th:text="${user.getId()} + ' - ' + ${user.getName()} + ' (' + ${user.getUserType() + ')'}"></span></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="container">
+        Add new user:
+        <form action="#" th:action="@{/signup}" method="POST">
+            <label for="newUserType">User type:</label>
+            <select class="form-select" id="newUserType" name="userType" required>
+                <option value="instructor">Instructor</option>
+                <option value="student">Student</option>
+            </select>
+
+            <label for="newUserId">User id:</label>
+            <input type="text" placeholder="user id" name="id" id="newUserId" required>
+
+            <label for="newName">Name:</label>
+            <input type="text" placeholder="name" name="name" id="newName" required>
+
+            <label for="newPassword">Password:</label>
+            <input type="text" placeholder="password" name="password" id="newPassword" required>
+
+            <button class="btn btn-success">Add new user</button>
+        </form>
+    </div>
+
+    <div class="container">
+        Add new course:
+        <form action="#" th:action="@{/course/create}" method="POST">
+            <label for="newCourseId">Course id:</label>
+            <input type="text" placeholder="course id" name="newCourseId" id="newCourseId" required>
+
+            <label for="newTitle">Title:</label>
+            <input type="text" placeholder="title" name="newTitle" id="newTitle" required>
+
+            <label for="instructorId">
+                <div class="form-group">
+                    <label for="instructorId">Select an instructor:</label>
+                    <select class="form-control" id="instructorId" name="instructorId" required>
+                        <option selected disabled value="">Select an instructor</option>
+                        <option th:each="instructor : ${instructors}" th:value="${instructor.getId()}" th:text="${instructor.getId()} + ' - ' + ${instructor.getName()}"></option>
+                    </select>
+                </div>
+            </label>
+
+            <button class="btn btn-success">Add new course</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <form  action="#" th:action="@{/instructor}" method="POST">
+            <label for="instructorIdInfo">
+                <div class="form-group">
+                    <label for="instructorIdInfo">Select an instructor:</label>
+                    <select class="form-control" id="instructorIdInfo" name="instructorId" required>
+                        <option selected disabled value="">Select an instructor</option>
+                        <option th:each="instructor : ${instructors}" th:value="${instructor.getId()}" th:text="${instructor.getId()} + ' - ' + ${instructor.getName()}"></option>
+                    </select>
+                </div>
+            </label>
+            <button class="btn btn-warning" name="instructorAction" value="updateForm">Update instructor</button>
+            <button class="btn btn-danger" name="instructorAction" value="delete">Delete instructor</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <form action="#" th:action="@{/student}" method="GET">
+            <label for="studentId">
+                <div class="form-group">
+                    <label for="studentId">Select a student:</label>
+                    <select class="form-control" id="studentId" name="studentId" required>
+                        <option selected disabled value="">Select a student</option>
+                        <option th:each="student : ${students}" th:value="${student.getId()}" th:text="${student.getId()} + ' - ' + ${student.getName()}"></option>
+                    </select>
+                </div>
+            </label>
+            <button class="btn btn-success">Get student</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <form action="#" th:action="@{/course}" method="GET">
+            <label for="courseId">
+                <div class="form-group">
+                    <label for="courseId">Select a course:</label>
+                    <select class="form-control" id="courseId" name="courseId" required>
+                        <option selected disabled value="">Select a course</option>
+                        <option th:each="course : ${courses}" name="courseId" th:value="${course.getId()}" th:text="${course.getId()} + ' - ' + ${course.getTitle()}"></option>
+                    </select>
+                </div>
+            </label>
+            <button class="btn btn-success">Get course</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

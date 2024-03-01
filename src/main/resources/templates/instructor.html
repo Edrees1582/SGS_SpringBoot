@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:security="http://www.springframework.org/security/tags">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Instructor</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="bg-dark-subtle">
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container-fluid">
+            <a class="navbar-brand">Student Grading System</a>
+            <div th:if="${user != null}">
+                <div class="d-flex">
+                    <div class="nav-link disabled" aria-disabled="true">Logged in as: <span th:text="${user.getId()} + ' - ' + ${user.getName()} + ' (' + ${user.getUserType() + ')'}"></span></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <h2>Courses List</h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Course ID</th>
+            <th scope="col">Title</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.getId()}"></td>
+                <td th:text="${course.getTitle()}"></td>
+                <td>
+                    <form action="#" th:action="@{/course}" method="GET">
+                        <input type="hidden" name="courseId" th:value="${course.getId()}">
+                        <button class="btn btn-success">Get course</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

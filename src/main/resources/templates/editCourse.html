@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit course</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="bg-dark-subtle">
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container-fluid">
+            <a class="navbar-brand">Student Grading System</a>
+            <div th:if="${user != null}">
+                <div class="d-flex">
+                    <div class="nav-link disabled" aria-disabled="true">Logged in as: <span th:text="${user.getId()} + ' - ' + ${user.getName()} + ' (' + ${user.getUserType() + ')'}"></span></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <form action="#" th:action="@{/course/update}" method="POST">
+        <label for="courseId">Course id:</label>
+        <input type="text" name="courseId" id="courseId" th:value="${course.getId()}" disabled>
+        <input type="hidden" name="courseId" th:value="${course.getId()}">
+
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" th:value="${course.getTitle()}">
+
+        <label for="instructorId">
+            <div class="form-group">
+                <label for="instructorId">Select an instructor:</label>
+                <select class="form-control" id="instructorId" name="instructorId" required>
+                    <option selected disabled value="">Select an instructor</option>
+                    <div th:each="instructor : ${instructors}">
+                        <option th:if="${instructor.getId().equals(course.getInstructorId())}" th:value="${instructor.getId()}" th:text="${instructor.getId()} + ' - ' + ${instructor.getName()}" selected></option>
+                        <option th:unless="${instructor.getId().equals(course.getInstructorId())}" th:value="${instructor.getId()}" th:text="${instructor.getId()} + ' - ' + ${instructor.getName()}"></option>
+                    </div>
+                </select>
+            </div>
+        </label>
+        <button class="btn btn-success">Save</button>
+    </form>
+    <form action="#" th:action="@{/course}" method="GET">
+        <input type="hidden" name="courseId" th:value="${course.getId()}">
+        <button class="btn btn-secondary">Cancel</button>
+    </form>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
