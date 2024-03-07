@@ -1,6 +1,6 @@
 # Student Grading System
 
-This is a student garding system built using Java with Spring Boot, Spring Security, and Thymeleaf. <br>
+This is a student grading system built using Java with Spring Boot, Spring Security, and Thymeleaf. <br>
 There are 3 types of users: Admins, Instructors, and Students. <br>
 Each one has a role, admins can add, edit, delete, view users and courses. Instructors can enroll students and add their grades. Students can view their grades. <br>
 Authentication and authorization techniques are used to insure security. <br>
